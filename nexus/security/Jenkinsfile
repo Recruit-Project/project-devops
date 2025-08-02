@@ -38,7 +38,7 @@ pipeline {
 
 
         stage('넥서스 배포') {
-            ./gradlew publish
+           sh ./gradlew publish
         }
 
 }
