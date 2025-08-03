@@ -42,10 +42,13 @@ pipeline {
             steps {
                 sh 'mkdir -p ./build/docker'
                 sh "cp ./build/libs/project-member-dev-0.0.1-SNAPSHOT.jar ./build/docker/project-member-dev-0.0.1-SNAPSHOT.jar"
+
                 withCredentials([usernamePassword(credentialsId: 'docker_password', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-                    sh "echo ${PASSWORD} | docker login -u ${USERNAME} --password-stdin"
+                    sh '''
+                        echo "$PASSWORD" | docker login -u "$USERNAME" --password-stdin
+                    '''
                 }
-                // 여기서 도커 빌드할 때 context는 member/ 루트
+
                 sh "docker build -t ${DOCKERHUB_USERNAME}/backend-member:latest ."
             }
         }
