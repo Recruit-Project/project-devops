@@ -10,12 +10,12 @@ metadata:
     managed-by: {{ .Values.service.selector.managedBy }}
 spec:
   selector:
-    part-of: {{ .Values.service.selector.partOf }}
+    partOf: {{ .Values.service.selector.partOf }}
     component: {{ .Values.service.selector.component }}
     name: {{ .Values.service.selector.name }}
     instance: {{ .Values.service.selector.instance }}
     version: {{ .Values.service.selector.version }}
-    managed-by: {{ .Values.service.selector.managedBy }}
+    managedBy: {{ .Values.service.selector.managedBy }}
   ports:
     - port: {{ .Values.service.port }}
       targetPort: {{ .Values.service.targetPort }}

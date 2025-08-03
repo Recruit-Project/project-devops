@@ -37,4 +37,4 @@ spec:
   tls:                                 # 추가
     - hosts:                           # 추가
         - teamgoo-dev.com                 # 추가
-      secretName: backend-app-t      # 추가
+      secretName: teamgoo-tls      # 추가
