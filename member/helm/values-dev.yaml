@@ -36,7 +36,13 @@ service:
   name: backend-member-service
   port: 80
   targetPort: 8080
-  selector: *labels
+  selector:
+    partOf: backend-part
+    component: backend-member
+    name: backend-member-pod-name
+    instance: backend-member-pod-instance
+    version: "1.0.0"
+    managedBy: kubectl
 
 hpa:
   enabled: true
