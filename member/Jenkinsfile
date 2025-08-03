@@ -39,7 +39,11 @@ pipeline {
                 }
             }
         }
-
+stage('파일 위치 확인') {
+    steps {
+        sh 'find . -name Dockerfile-dev'
+    }
+}
         stage('컨테이너 빌드') {
             steps {
                 sh 'pwd'
