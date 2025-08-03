@@ -7,11 +7,9 @@ pipeline {
     }
 
     environment {
-
         DOCKERHUB_USERNAME = 'agida0413'
         RELEASE_GITHUB_URL = 'https://github.com/Recruit-Project/project-devops.git'
         APP_GITHUB_URL = 'https://github.com/Recruit-Project/project-member.git'
-
     }
 
     stages {
@@ -23,9 +21,10 @@ pipeline {
 
         stage('소스 빌드') {
             steps {
-
-                sh "chmod +x ./gradlew"
-                sh "gradle clean build -x test"
+                dir('member') {
+                    sh "chmod +x ./gradlew"
+                    sh "./gradlew clean build -x test"
+                }
             }
         }
 
@@ -42,16 +41,18 @@ pipeline {
 
         stage('컨테이너 빌드') {
             steps {
-                sh 'mkdir -p ./build/docker'
-                sh 'cp ./build/libs/*.jar ./build/docker/'
+                dir('member') {
+                    sh 'mkdir -p ./build/docker'
+                    sh 'cp ./build/libs/*.jar ./build/docker/'
 
-                withCredentials([usernamePassword(credentialsId: 'docker_password', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-                    sh '''
-                        echo "$PASSWORD" | docker login -u "$USERNAME" --password-stdin
-                    '''
+                    withCredentials([usernamePassword(credentialsId: 'docker_password', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                        sh '''
+                            echo "$PASSWORD" | docker login -u "$USERNAME" --password-stdin
+                        '''
+                    }
+
+                    sh "docker build -t ${DOCKERHUB_USERNAME}/backend-member:latest -f Dockerfile ."
                 }
-
-                sh "docker build -t ${DOCKERHUB_USERNAME}/backend-member:latest ."
             }
         }
 
@@ -63,8 +64,10 @@ pipeline {
 
         stage('쿠버네티스 배포') {
             steps {
-                withCredentials([file(credentialsId: 'k8s_master_config', variable: 'KUBECONFIG')]) {
-                    sh "helm upgrade --install backend-member ./helm --values ./helm/values-dev.yaml --namespace backend-app"
+                dir('member') {
+                    withCredentials([file(credentialsId: 'k8s_master_config', variable: 'KUBECONFIG')]) {
+                        sh "helm upgrade --install backend-member ./helm --values ./helm/values-dev.yaml --namespace backend-app"
+                    }
                 }
             }
         }
