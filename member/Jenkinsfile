@@ -56,7 +56,7 @@ pipeline {
                 }
 
                 //sh "docker build -t ${DOCKERHUB_USERNAME}/backend-member:latest -f Dockerfile-dev ."
-                sh "docker build -t ${DOCKERHUB_USERNAME}/backend-member:latest -f member/Dockerfile-dev member"
+                sh "docker build -t ${DOCKERHUB_USERNAME}/backend-member:latest -f ./member/Dockerfile-dev ./member"
 
             }
         }
