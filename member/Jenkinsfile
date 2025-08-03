@@ -42,6 +42,10 @@ pipeline {
 
         stage('컨테이너 빌드') {
             steps {
+                sh 'pwd'
+                sh 'ls -al'
+                sh 'ls -al Dockerfile-dev || echo "Dockerfile-dev not found in current directory"'
+                sh 'ls -al ./build/libs'
                 sh 'mkdir -p ./build/docker'
                 sh 'cp ./build/libs/*.jar ./build/docker/'
 
@@ -51,7 +55,9 @@ pipeline {
                     '''
                 }
 
-                sh "docker build -t ${DOCKERHUB_USERNAME}/backend-member:latest -f Dockerfile-dev ."
+                //sh "docker build -t ${DOCKERHUB_USERNAME}/backend-member:latest -f Dockerfile-dev ."
+                sh "docker build -t ${DOCKERHUB_USERNAME}/backend-member:latest -f member/Dockerfile-dev member"
+
             }
         }
 
