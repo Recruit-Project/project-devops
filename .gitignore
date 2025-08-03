@@ -39,3 +39,7 @@ out/
 .idea
 .out
 .build
+
+
+**/configmap.yaml
+**/secret.yaml

@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
         - name: backend-member-container
-          image: agida0413/backend-member:latest  #추후수정
+          image: agida0413/backend-member:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -46,13 +46,13 @@ spec:
                 name: backend-member-secret
           readinessProbe:
             httpGet:
-              path: "/readiness"
+              path: "/actuator/health/readiness"
               port: 8080
             periodSeconds: 10
             failureThreshold: 3
           livenessProbe:
             httpGet:
-              path: "/liveness"
+              path: "/actuator/health/liveness"
               port: 8080
             periodSeconds: 10
             failureThreshold: 3
@@ -63,10 +63,4 @@ spec:
             limits:
               memory: "200Mi"
               cpu: "200m"
-#          volumeMounts:
-#            - name: secret-datasource
-#              mountPath: /usr/src/myapp/datasource
-#      volumes:
-#        - name: secret-datasource
-#          secret:
-#            secretName: api-tester-2221-postgresql
+
