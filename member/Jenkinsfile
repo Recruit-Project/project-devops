@@ -39,17 +39,15 @@ pipeline {
                 }
             }
         }
-stage('파일 위치 확인') {
-    steps {
-        sh 'find . -name Dockerfile-dev'
-    }
-}
+        stage('파일 위치 확인') {
+            steps {
+                sh 'find . -name Dockerfile-dev'
+                        sh 'find . -name "*.jar"'
+                        sh 'ls -lR | grep ".jar"'
+            }
+        }
         stage('컨테이너 빌드') {
             steps {
-                sh 'pwd'
-                sh 'ls -al'
-                sh 'ls -al Dockerfile-dev || echo "Dockerfile-dev not found in current directory"'
-                sh 'ls -al ./build/libs'
                 sh 'mkdir -p ./build/docker'
                 sh 'cp ./build/libs/*.jar ./build/docker/'
 
@@ -59,8 +57,8 @@ stage('파일 위치 확인') {
                     '''
                 }
 
-                //sh "docker build -t ${DOCKERHUB_USERNAME}/backend-member:latest -f Dockerfile-dev ."
-                sh "docker build -t ${DOCKERHUB_USERNAME}/backend-member:latest -f ./Dockerfile-dev ./"
+                 sh "docker build -t ${DOCKERHUB_USERNAME}/backend-member:latest -f release/member/Dockerfile-dev release/member"
+
 
             }
         }
