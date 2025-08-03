@@ -72,7 +72,9 @@ pipeline {
         stage('쿠버네티스 배포') {
             steps {
                 withCredentials([file(credentialsId: 'k8s_master_config', variable: 'KUBECONFIG')]) {
-                    sh "helm upgrade --install backend-member ./helm --values ./helm/values-dev.yaml --namespace backend-app"
+                    sh "helm upgrade --install backend-member release/member/helm \
+                          --values release/member/helm/values-dev.yaml \
+                          --namespace backend-app"
                 }
             }
         }
