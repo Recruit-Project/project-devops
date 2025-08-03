@@ -29,18 +29,18 @@ spec:
                 name: {{ .Values.envFrom.configMap }}
             - secretRef:
                 name: {{ .Values.envFrom.secret }}
-          readinessProbe:
-            httpGet:
-              path: "{{ .Values.readinessPath }}"
-              port: {{ .Values.containerPort }}
-            periodSeconds: 10
-            failureThreshold: 3
-          livenessProbe:
-            httpGet:
-              path: "{{ .Values.livenessPath }}"
-              port: {{ .Values.containerPort }}
-            periodSeconds: 10
-            failureThreshold: 3
+#          readinessProbe:
+#            httpGet:
+#              path: "{{ .Values.readinessPath }}"
+#              port: {{ .Values.containerPort }}
+#            periodSeconds: 10
+#            failureThreshold: 3
+#          livenessProbe:
+#            httpGet:
+#              path: "{{ .Values.livenessPath }}"
+#              port: {{ .Values.containerPort }}
+#            periodSeconds: 10
+#            failureThreshold: 3
           resources:
             requests:
               memory: {{ .Values.resources.requests.memory }}
