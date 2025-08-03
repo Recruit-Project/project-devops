@@ -26,7 +26,6 @@ pipeline {
 
                 sh "chmod +x ./gradlew"
                 sh "gradle clean build -x test"
-                sh "ls -l ./build/libs/"
             }
         }
 
@@ -42,7 +41,7 @@ pipeline {
         stage('컨테이너 빌드') {
             steps {
                 sh 'mkdir -p ./build/docker'
-                sh "cp ./build/libs/project-member-0.0.1-SNAPSHOT.jar ./build/docker/project-member-0.0.1-SNAPSHOT.jar"
+                sh "cp ./build/libs/project-member-dev-0.0.1-SNAPSHOT.jar ./build/docker/project-member-dev-0.0.1-SNAPSHOT.jar"
                 withCredentials([usernamePassword(credentialsId: 'docker_password', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                     sh "echo ${PASSWORD} | docker login -u ${USERNAME} --password-stdin"
                 }
