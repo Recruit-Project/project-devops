@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: backend-app
+  name: backend-member-config
+data:
+  spring_profiles_active: "dev"
+  DB_URL: "jdbc:mysql://100.114.34.71:3306/member?useSSL=false"
+
+

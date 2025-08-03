@@ -41,7 +41,7 @@ pipeline {
                 steps {
                     sh 'ls -al' // 디버깅용: gradlew 있는지 확인
                     sh 'chmod +x ./gradlew'
-                    sh './gradlew publish'
+                    sh './gradlew --refresh-dependencies publish'
                 }
         }
     }
