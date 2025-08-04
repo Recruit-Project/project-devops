@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend-member-pod
+  name: backend-analyze-pod
   namespace: {{ .Values.namespace }}
   labels:
     {{- toYaml .Values.labels | nindent 4 }}
@@ -18,7 +18,7 @@ spec:
         {{- toYaml .Values.labels | nindent 8 }}
     spec:
       containers:
-        - name: backend-member-container
+        - name: backend-analyze-container
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -31,7 +31,7 @@ spec:
                 name: {{ .Values.envFrom.secret }}
           readinessProbe:
             httpGet:
-              path: "{{ .Values.readinessPath }}"
+              path: {{ .Values.readinessPath }}
               port: {{ .Values.containerPort }}
             initialDelaySeconds: 5
             periodSeconds: 15
@@ -39,7 +39,7 @@ spec:
             failureThreshold: 5
           livenessProbe:
             httpGet:
-              path: "{{ .Values.livenessPath }}"
+              path: {{ .Values.livenessPath }}
               port: {{ .Values.containerPort }}
             initialDelaySeconds: 60
             periodSeconds: 30
