@@ -34,6 +34,41 @@ spec:
                 name: backend-member-service
                 port:
                   number: 80
+          - path: /api/v1/chat
+            pathType: Prefix
+            backend:
+              service:
+                name: backend-chat-crud-service
+                port:
+                  number: 80
+          - path: /api/v1/analyze
+            pathType: Prefix
+            backend:
+              service:
+                name: backend-analyze-service
+                port:
+                  number: 80
+          - path: /api/v1/content
+            pathType: Prefix
+            backend:
+              service:
+                name: backend-content-service
+                port:
+                  number: 80
+          - path: /api/v1/plan
+            pathType: Prefix
+            backend:
+              service:
+                name: backend-plan-service
+                port:
+                  number: 80
+          - path: /api/v1/recruit
+            pathType: Prefix
+            backend:
+              service:
+                name: backend-recruit-service
+                port:
+                  number: 80
   tls:                                 # 추가
     - hosts:                           # 추가
         - teamgoo-dev.com                 # 추가
