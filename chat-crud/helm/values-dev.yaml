@@ -1,7 +1,7 @@
 namespace: backend-app
 
 image:
-  repository: agida0413/backend-member
+  repository: agida0413/backend-chat-crud
   tag: latest
   pullPolicy: Always
 
@@ -9,9 +9,9 @@ replicaCount: 1
 
 labels:
   partOf: backend-part
-  component: backend-member
-  name: backend-member-pod-name
-  instance: backend-member-pod-instance
+  component: backend-chat-crud
+  name: backend-chat-crud-pod-name
+  instance: backend-chat-crud-pod-instance
   version: "1.0.0"
   managedBy: kubectl
 
@@ -29,25 +29,25 @@ readinessPath: /actuator/health/readiness
 livenessPath: /actuator/health/liveness
 
 envFrom:
-  configMap: backend-member-config
-  secret: backend-member-secret
+  configMap: backend-chat-crud-config
+  secret: backend-chat-crud-secret
 
 service:
-  name: backend-member-service
+  name: backend-chat-crud-service
   port: 80
   targetPort: 8080
   selector:
     partOf: backend-part
-    component: backend-member
-    name: backend-member-pod-name
-    instance: backend-member-pod-instance
+    component: backend-chat-crud
+    name: backend-chat-crud-pod-name
+    instance: backend-chat-crud-pod-instance
     version: "1.0.0"
     managedBy: kubectl
 
 hpa:
   enabled: true
-  name: backend-member-hpa
-  targetDeployment: backend-member-pod
+  name: backend-chat-crud-hpa
+  targetDeployment: backend-chat-crud-pod
   minReplicas: 1
   maxReplicas: 2
   cpuUtilization: 70
